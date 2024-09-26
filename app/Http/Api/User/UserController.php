@@ -22,6 +22,61 @@ class UserController extends Controller
 {
     /**
      * @throws \Exception
+     *
+     * @OA\OpenApi(
+     *    @OA\Info(
+     *             title="Lista Api",
+     *             version="1.0",
+     *             description="Lista Api"
+     *    ),
+     *
+     *       @OA\Tag(
+     *                name="Table",
+     *                description="Gestione lista table"
+     *            ),
+     * @OA\Tag(
+     *                 name="Auth",
+     *                 description="Api autenticazione per generare il token e per il refresh token"
+     *             ),
+     *
+     *  @OA\Server(
+     *             url="http://localhost:8000/",
+     *             description="Ambiente di sviluppo"
+     *         ),
+     *
+     *      )
+     *
+     *
+     * @OA\SecurityScheme(
+     *            securityScheme="bearerAuth",
+     *            type="http",
+     *            scheme="bearer",
+     *            bearerFormat="JWT"
+     *        )
+     * ################################
+     *
+     * @OA\Post (
+     *      path="/api/login",
+     *             summary="Login",
+     *             description="Login",
+     *             tags={"Auth"},
+     *      @OA\RequestBody(
+     *                 required=true,
+     *                 description="Dati per la login",
+     *      @OA\JsonContent(
+     *                     type="object",
+     *
+     *                         @OA\Property(property="email", type="string"),
+     *                         @OA\Property(property="password", type="string"),
+     *      ),
+     *      ),
+     *      @OA\Response(
+     *                 response=200,
+     *                 description="Ritorna i dati dell'utente e il token necessario per le chiamate",
+     *
+     *             ),
+     *  )
+     *
      */
     public function login(UserRequest $request){
         if($request->validationData()){
@@ -64,6 +119,28 @@ class UserController extends Controller
 
     /**
      * @throws \Exception
+     * @OA\Post (
+     *       path="/api/refresh",
+     *              summary="Refresh token",
+     *              description="Refresh token",
+     *              tags={"Auth"},
+     *     security={{"bearerAuth":{}}},
+     *       @OA\RequestBody(
+     *                  required=true,
+     *                  description="Dati per la refresh",
+     *       @OA\JsonContent(
+     *                      type="object",
+     *
+     *                          @OA\Property(property="refresh_token", type="string"),
+     *       ),
+     *       ),
+     *       @OA\Response(
+     *                  response=200,
+     *                  description="Ritorna i dati dell'utente e il token aggiornato necessario per le chiamate",
+     *
+     *              ),
+     *   )
+     *
      */
     public function refresh(UserRefreshRequest $request){
         if($request->validationData()){
@@ -83,6 +160,19 @@ class UserController extends Controller
 
     /**
      * @throws \Exception
+     * @OA\Get (
+     *      path="/api/logout",
+     *              summary="Logout",
+     *              description="Logout",
+     *              tags={"Auth"},
+     *      security={{"bearerAuth":{}}},
+     * @OA\Response(
+     *                   response=200,
+     *                   description="Ritorna status code 200 se la logout è anadata a buon fine",
+     *
+     *               ),
+     *  )
+     *
      */
     public function logout (){
         try{

@@ -1,0 +1,145 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Lista Api",
+        "description": "Lista Api",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/",
+            "description": "Ambiente di sviluppo"
+        }
+    ],
+    "paths": {
+        "/api/list": {
+            "get": {
+                "tags": [
+                    "Table"
+                ],
+                "summary": "Proxy api",
+                "description": "Proxy api https://api.openbrewerydb.org/v1/breweries",
+                "operationId": "9ccc5fced6b8e341bd276f326e991468",
+                "responses": {
+                    "200": {
+                        "description": "Ritorna la lista dell'api in get"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login",
+                "description": "Login",
+                "operationId": "fe0e33a51909a3c3fe91d180880bf0cf",
+                "requestBody": {
+                    "description": "Dati per la login",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ritorna i dati dell'utente e il token necessario per le chiamate"
+                    }
+                }
+            }
+        },
+        "/api/refresh": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Refresh token",
+                "description": "Refresh token",
+                "operationId": "68330745a860d0ef4ec4aefc5bd306c6",
+                "requestBody": {
+                    "description": "Dati per la refresh",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "refresh_token": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ritorna i dati dell'utente e il token aggiornato necessario per le chiamate"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/logout": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout",
+                "description": "Logout",
+                "operationId": "6a4781c7f62976031f87efa7ba5b96d5",
+                "responses": {
+                    "200": {
+                        "description": "Ritorna status code 200 se la logout è anadata a buon fine"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Table",
+            "description": "Gestione lista table"
+        },
+        {
+            "name": "Auth",
+            "description": "Api autenticazione per generare il token e per il refresh token"
+        }
+    ]
+}

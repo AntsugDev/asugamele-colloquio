@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: ASUGAMELE
+    container_name: Application
     working_dir: /var/www/html
     volumes:
       - .:/var/www/html
@@ -22,7 +22,7 @@ services:
 
   db:
     image: mysql:8.0
-    container_name: ASUGAMELE_DB
+    container_name: DbMysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: asugamele_laravel
@@ -33,9 +33,9 @@ services:
     ports:
       - "3306:3306"
 
-  migrate:
+  post_build:
     build: .
-    container_name: ASUGAMELE_MIGRATE
+    container_name: PostBuild
     command:
         - /usr/local/bin/start.sh
     depends_on:

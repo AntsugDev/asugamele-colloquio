@@ -14,6 +14,20 @@ class ApiController extends Controller
 
     /**
      * @throws \Exception
+     *
+     * @OA\Get (
+     *       path="/api/list",
+     *               summary="Proxy api",
+     *               description="Proxy api https://api.openbrewerydb.org/v1/breweries",
+     *               tags={"Table"},
+     *       security={{"bearerAuth":{}}},
+     *  @OA\Response(
+     *                    response=200,
+     *                    description="Ritorna la lista dell'api in get",
+     *
+     *                ),
+     *   )
+     *
      */
     public function get_list()
     {
