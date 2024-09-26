@@ -121,6 +121,7 @@ Si divide:
 2. Pagina Table
 3. Pagina gestione utenza:
    - refresh token
+   - view token/refresh token (rilasciato solo per test)
    - logout
 
 Le chiamate api sono state realizate attraverso <i>axios</i>, creando una funzione generica che gestisce direttamente la chiamata ritornando una Promise e, sempre in questa funzione viene gestito in automatico(in base all'url dell'api che viene chiamato), se passare nella request header il bearer token.
@@ -129,5 +130,6 @@ In fase di login, se l'api risponde positivamente, il sistema inserisce nel vuex
 
 La possibilità di refresh token, all'interno della pagina di gestione utenza, è puramente a scopo di test e in un progetto reale, gestirei la chiamata o al cambiamento di pagina, oppure ad intervalli regolari, se il token ha una validità inferiore ad un'ora. 
 
+Ho tralasciato un pò la parte grafica, usando semplicemnte i componenti mesis a disposizione da vuetify così come sono.
 
 
