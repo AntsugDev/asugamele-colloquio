@@ -32,8 +32,12 @@ class AuthTest extends TestCase
             $decode = json_decode(file_get_contents(Storage::disk('tmp')->path($this->file)),true);
             $this->token = $decode['token'];
             $this->refresh = $decode['refresh'];
-            Storage::disk('tmp')->delete($this->file);
         }
+}
+
+protected function deleteFile(){
+    if(Storage::disk('tmp')->exists($this->file))
+        Storage::disk('tmp')->delete($this->file);
 }
 
     /**
@@ -88,23 +92,6 @@ class AuthTest extends TestCase
         $this->genericReponse($response);
     }
 
-    /**
-     * @throws \Exception
-     */
-    public function test_logout(){
-        try{
-            if (is_null($this->token) && is_null($this->refresh))
-                $this->fail("Unable to proceed as the parameters are null[logout]");
-
-            $response = $this->get('/api/logout', [
-                "Authorization" => "Bearer " . $this->token
-            ]);
-           $response->assertStatus($response->getStatusCode());
-        }catch (\Exception $e){
-            $this->fail($e->getMessage());
-        }
-    }
-
     public function test_list(){
         try{
             if (is_null($this->token) && is_null($this->refresh))
@@ -118,5 +105,26 @@ class AuthTest extends TestCase
             $this->fail($e->getMessage());
         }
     }
+
+
+    /**
+     * @throws \Exception
+     */
+    public function test_logout(){
+        try{
+            if (is_null($this->token) && is_null($this->refresh))
+                $this->fail("Unable to proceed as the parameters are null[logout]");
+
+            $response = $this->get('/api/logout', [
+                "Authorization" => "Bearer " . $this->token
+            ]);
+           $response->assertStatus($response->getStatusCode());
+           $this->deleteFile();
+        }catch (\Exception $e){
+            $this->fail($e->getMessage());
+        }
+    }
+
+
 
 }
