@@ -105,4 +105,18 @@ class AuthTest extends TestCase
         }
     }
 
+    public function test_list(){
+        try{
+            if (is_null($this->token) && is_null($this->refresh))
+                $this->fail("Unable to proceed as the parameters are null[list]");
+
+            $response = $this->get('/api/list', [
+                "Authorization" => "Bearer " . $this->token
+            ]);
+            $response->assertStatus($response->getStatusCode());
+        }catch (\Exception $e){
+            $this->fail($e->getMessage());
+        }
+    }
+
 }
