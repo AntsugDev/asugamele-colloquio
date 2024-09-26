@@ -3,6 +3,8 @@ import LoginPage from "../view/LoginPage.vue";
 import HomePage from "../view/HomePage.vue";
 import {store} from "../store/index.js";
 import TablePage from "../view/TablePage.vue";
+import dayjs from "dayjs";
+import UserPage from "../view/UserPage.vue";
 
 export const route = createRouter({
     history:createWebHistory(),
@@ -20,14 +22,25 @@ export const route = createRouter({
                 let token = store.getters['Auth/getToken']
                 if(token === null)
                     next({name:'Login'})
-                else
-                    next();
+                else {
+                    let expired = dayjs(token.expired);
+                    let now = dayjs();
+                    if(parseFloat(expired.diff(now,'minute')) > 0 ){
+                        next();
+                    }else
+                        next({name:'Login',query: {error: btoa('Session expired')}})
+                }
             },
             children: [
                 {
                     path:'/table',
                     name:'Table',
                     component: TablePage
+                },
+                {
+                    path:'/user',
+                    name:'User',
+                    component: UserPage
                 },
             ]
         }

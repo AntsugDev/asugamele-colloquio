@@ -1,8 +1,10 @@
 <template>
-    <v-dialog v-model="dialogCust" max-width="400">
+    <v-dialog v-model="dialogCust" min-width="400" max-width="800">
         <v-card>
-            <v-card-title class="headline">Response api</v-card-title>
-            <v-card-text>{{msg}}</v-card-text>
+            <v-card-title class="headline">{{ title }}</v-card-title>
+            <v-card-text>
+                <slot name="msg" >{{msg}}</slot>
+            </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="primary"  type="button"
@@ -13,14 +15,14 @@
 </template>
 <script setup>
 import {ref, defineProps, watch, onMounted} from "vue";
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {store} from "../../store/index.js";
 const router = useRouter();
 const props = defineProps({
     dialog:{
-      type:Boolean,
-      required:true,
-      default: false
+        type:Boolean,
+        required:true,
+        default: false
     },
     msg:{
         type: String,
@@ -28,17 +30,27 @@ const props = defineProps({
     },
     routerName:{
         type:String,
+        nullable:true,
+        default:null
+    },
+    title:{
+        type:String,
+        default:"Response Api",
         nullable:true
     }
 })
 const textBtn = ref('Close');
 
 const dialogCust = ref(false)
-
+const route = useRoute()
 const close =() => {
     dialogCust.value = false
     if(props.routerName !== null) {
-        router.push({name: props.routerName})
+        if(props.routerName === "Reload"){
+            router.push({name: route.name})
+        }else
+            router.push({name: props.routerName})
+
         store.commit('Dialog/update',{
             show:false,
             msg:null,
@@ -55,13 +67,23 @@ watch(() => props.dialog, (value) => {
     dialogCust.value = value
 })
 watch(()=> props.routerName, (value) => {
-    if(value !== null)
-        textBtn.value = "Go to "+props.routerName
+    if(value !== null) {
+        if(value === "Reload" || value === undefined)
+            textBtn.value = 'Close'
+        else
+            textBtn.value = "Go to " + props.routerName
+    }
+    else textBtn.value = 'Close'
 })
 
 onMounted(() => {
     dialogCust.value = props.dialog
-    textBtn.value = props.routerName !== null ? "Go to "+props.routerName : 'Close'
+    if(props.routerName !== null) {
+        if (props.routerName === "Reload" || props.routerName === undefined)
+            textBtn.value = 'Close'
+        else
+            textBtn.value = "Go to " + props.routerName
+    } else textBtn.value = 'Close'
 })
 </script>
 <style scoped lang="css">

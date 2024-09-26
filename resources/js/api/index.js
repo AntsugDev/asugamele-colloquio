@@ -10,8 +10,8 @@ export const api = (url,method,payload = null,queryString= null) => {
         Accept: "application/json",
     }
     let token =store.getters['Auth/getToken'];
-    if(url.toString().indexOf('list') !== -1 && token !== null) {
-        header.Authorization = `Bearer ${token}`
+    if(url.toString().indexOf('login') === -1 && token !== null) {
+        header.Authorization = `Bearer ${token.token}`
     }
 
     let config = {

@@ -6,6 +6,25 @@
     </v-layout>
 </template>
 <script setup>
+import {useStore} from "vuex";
+import {computed} from "vue";
+import {useRoute, useRouter} from "vue-router";
+
+const store = useStore();
+const checker = computed(() => {
+    return store.getters['Auth/getInit']
+})
+const router = useRouter();
+const route = useRoute()
+document.body.addEventListener('click',() => {
+    console.log(['BODY_CLICK',checker.value,route.fullPath])
+    if(route.fullPath.toString().indexOf('login') === -1) {
+        if (checker.value) {
+            router.push({name: 'Login', query: {error: btoa('Session is not valid')}})
+        }
+    }
+})
+
 </script>
 <style lang="css">
 @import "../css/app.css";

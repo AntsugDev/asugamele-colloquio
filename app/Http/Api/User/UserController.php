@@ -109,7 +109,7 @@ class UserController extends Controller
             'expires_at' => Carbon::now()->addHours(1),
         ]);
 
-        $resource->additional(["data"=>[
+        $resource->additional(["data-token"=>[
             "access_token"=> $token->accessToken,
             "refresh_token" =>$refreshToken->id,
             "expires_at" => $expiredAt->format('Y-m-d H:i:s')

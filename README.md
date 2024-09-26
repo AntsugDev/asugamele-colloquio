@@ -103,7 +103,7 @@ Se questa risponde positivamente, viene restitua la risposta all'interno di un J
 
 Il token generato ha validità un'ora; esso è legato allas chiave secreta presente sulla tabella <i>oauth_clients</i>, per quel utente.
 
-Il sistema ogni mezz'ora schedulerà un commando, che andrà a cambiare questa chiave.
+Il sistema ogni mezz'ora schedulerà un commando, che andrà a cambiare questa chiave e, se presenti, andrà ad revocare i token(presenti sulla tabella <i>oauth_access_tokens</i>), creati da più di due ore e non revocati.
 
 Così facendo, il token che si sta utilizzando non sarà più buono.
 

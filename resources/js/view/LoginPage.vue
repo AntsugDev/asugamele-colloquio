@@ -1,6 +1,8 @@
 <template>
     <v-container class="fill-height" fluid>
-        <DialogAlert id="ciao" :msg="dialog.msg" :dialog="dialog.show" :router-name="dialog.routerName">
+        <DialogAlert id="ciao" :msg="dialog.msg"
+                     :dialog="dialog.show"
+                     :router-name="dialog.routerName">
         </DialogAlert>
         <v-row align="center" justify="center">
             <v-col cols="12" sm="8" md="6" lg="4">
@@ -49,11 +51,12 @@
 </template>
 
 <script setup>
-import {computed, ref} from 'vue'
+import {computed, onMounted, ref, watch} from 'vue'
 import {useStore} from "vuex";
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {api} from "../api/index.js";
 import DialogAlert from "./common/DialogAlert.vue";
+import dayjs from "dayjs";
 
 const email = ref('')
 const password = ref('')
@@ -61,6 +64,7 @@ const valid = ref(false)
 const form = ref(null)
 const store = useStore();
 const router = useRouter();
+const route = useRoute();
 const dialog =computed(() => {
     return store.getters['Dialog/getDialog']
 })
@@ -73,8 +77,16 @@ const login = () => {
             email: email.value,
             password: password.value
         }).then(r => {
-            let data = r.data.data
-            store.commit('Auth/update',data.token)
+            let data = r.data
+            let user = data.data;
+            store.commit('User/update',user)
+            let token = data["data-token"];
+            store.commit('Auth/update',{
+                token:token.access_token,
+                refresh_token:token.refresh_token,
+                expired:token.expires_at,
+                login: dayjs()
+            })
             store.commit('Dialog/update',{
                 show:true,
                 msg: "User authorized",
@@ -83,13 +95,46 @@ const login = () => {
             load.value = false;
 
         }).catch(e => {
+            console.log('aaa',e)
             load.value = false;
             store.commit('Dialog/update',{
                 show:true,
-                msg: e.response.data.errors !== undefined ? e.response.data.errors : e.message
+                msg:  e.message
             })
         })
      }
  })
 }
+const logout = ()  =>{
+    api('/logout','GET')
+}
+
+
+watch(() => route.query.error, (value) => {
+    if(value !== undefined)
+        store.commit('Dialog/update',{
+            show:true,
+            msg: route.query.error !== null ? atob(route.query.error) : null,
+            routerName: 'Reload'
+        })
+})
+
+onMounted(() => {
+    if(route.query.error !== undefined)
+        store.commit('Dialog/update',{
+            show:true,
+            msg: route.query.error !== null ? atob(route.query.error) : null,
+            routerName: 'Reload'
+        })
+
+    if(route.query.logout !== undefined && route.query.logout) {
+        logout();
+        store.commit('Dialog/update', {
+            show: true,
+            msg: "Logout success!",
+            routerName: 'Reload'
+        })
+    }
+})
+
 </script>
