@@ -1,0 +1,45 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ASUGAMELE
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+      - ./vendor:/var/www/html/vendor
+      - ./storage:/var/www/html/storage
+    ports:
+      - "8000:80"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=asugamele_laravel
+      - DB_USERNAME=asugamele
+      - DB_PASSWORD=123qwe!@
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: ASUGAMELE_DB
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: asugamele_laravel
+      MYSQL_USER: asugamele
+      MYSQL_PASSWORD: 123qwe!@
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  migrate:
+    build: .
+    container_name: ASUGAMELE_MIGRATE
+    command:
+        - /usr/local/bin/start.sh
+    depends_on:
+      - db
+
+volumes:
+  db_data:
