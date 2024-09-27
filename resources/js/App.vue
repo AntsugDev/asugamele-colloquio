@@ -16,6 +16,7 @@ const checker = computed(() => {
 })
 const router = useRouter();
 const route = useRoute()
+
 document.body.addEventListener('click',() => {
     if(route.fullPath.toString().indexOf('login') === -1) {
         if (checker.value) {

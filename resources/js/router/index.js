@@ -29,12 +29,16 @@ export const route = createRouter({
                 if(token === null)
                     next({name:'Login'})
                 else {
-                    let expired = dayjs(token.expired);
-                    let now = dayjs();
-                    if(parseFloat(expired.diff(now,'minute')) > 0 ){
-                        next();
-                    }else
-                        next({name:'Login',query: {error: btoa('Session expired')}})
+                    if(token.expired === null){
+                        next({name:'Login'})
+                    }else {
+                        let expired = dayjs(token.expired);
+                        let now = dayjs();
+                        if (parseFloat(expired.diff(now, 'minute')) > 0) {
+                            next();
+                        } else
+                            next({name: 'Login', query: {error: btoa('Session expired')}})
+                    }
                 }
             },
             children: [

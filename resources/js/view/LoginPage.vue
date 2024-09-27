@@ -95,10 +95,12 @@ const login = () => {
             load.value = false;
 
         }).catch(e => {
+            let data = e.response.data.data
+            console.log(data)
             load.value = false;
             store.commit('Dialog/update',{
                 show:true,
-                msg:  e.message
+                msg: data !== undefined  && data.errors !== undefined ? data.errors :  e.message
             })
         })
      }

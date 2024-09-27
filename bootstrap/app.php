@@ -30,14 +30,14 @@ return Application::configure(basePath: dirname(__DIR__))
                 return  response()->view('error',$query);
             }
             else if($e instanceof  ValidationException){
-                return new JsonResponse($e->errors(), $code);
+                return new JsonResponse(array("data"=>array("errors"=>$e->errors())), $code);
             }
             else if($e instanceof RouteNotFoundException || $e instanceof \Laravel\Passport\Exceptions\AuthenticationException || $e instanceof \Illuminate\Auth\AuthenticationException){
-                return new JsonResponse(array("errors" =>"Unauthorized" ), \Symfony\Component\HttpFoundation\Response::HTTP_UNAUTHORIZED);
+                return new JsonResponse(array("data"=>array("errors" =>"Unauthorized" )), \Symfony\Component\HttpFoundation\Response::HTTP_UNAUTHORIZED);
 
             }
             else {
-                return new JsonResponse(array("errors" => $e->getMessage()), is_numeric($code) ? $code : \Symfony\Component\HttpFoundation\Response::HTTP_NOT_IMPLEMENTED);
+                return new JsonResponse(array("data"=>array("errors" => $e->getMessage())), is_numeric($code) ? $code : \Symfony\Component\HttpFoundation\Response::HTTP_NOT_IMPLEMENTED);
             }
         });
     })->create();
