@@ -19,9 +19,10 @@
                             <v-text-field
                                 v-model="password"
                                 label="Password"
-                                prepend-icon="mdi-lock"
-                                type="password"
+                                :prepend-icon="textPassword.icon"
+                                :type="textPassword.type"
                                 required
+                                @click:prepend="viewPassword"
                                 :rules="[v => !!v || 'Required Field']"
                             ></v-text-field>
 
@@ -65,6 +66,20 @@ const dialog =computed(() => {
     return store.getters['Dialog/getDialog']
 })
 const load = ref(false);
+const textPassword = ref({
+    icon: 'mdi-lock',
+    type: 'password'
+})
+const viewPassword= () => {
+    if(textPassword.value.type === 'password'){
+        textPassword.value.type = 'text';
+        textPassword.value.icon = 'mdi-unlock';
+    }else{
+        textPassword.value.type = 'password';
+        textPassword.value.icon = 'mdi-lock';
+    }
+}
+
 const login = () => {
     load.value = true;
  form.value.validate().then(r => {
