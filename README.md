@@ -25,6 +25,10 @@
 <strong>DB_NAME</strong>: laravel_test<br />
 <strong>DB_PORT</strong>: 3306<br />
 
+Il database l'ho inserito nel container del docker, come spiegato sotto.
+
+In progetti reali non di sviluppo, dal mio punto di vista è sempre meglio tenerli separti container applicazione e database.
+
 ***
 
 ## Swagger
@@ -39,7 +43,13 @@ Ho creato un container, che contiene l'applicativo e un db mysql.
 
 Una volta creato e avviato il container vanno eseguiti i seguenti commandi:
 
-- <pre>docker exec Application  php artisan migrate:refresh --seed</pre>
+- migrate:
+  <pre>docker exec Application  php artisan migrate</pre>
+  oppure
+  <pre>docker exec Application  php artisan migrate --seed</pre>
+  oppure  
+  <pre>docker exec Application  php artisan migrate:fresh --seed</pre>
+
 - <pre>docker exec Application  php artisan schedule:work</pre>
 
 Ho creato anche un commando, per verificare se il database sia stato creato e l'applicativo sia connesso ad esso.
