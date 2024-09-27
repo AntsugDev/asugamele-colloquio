@@ -79,7 +79,7 @@ Questa parte conta delle seguenti api:
 1. login 
 2. refresh token
 3. logout
-4. lettura dati derivanti dall'api[https://api.openbrewerydb.org/v1/breweries](https://api.openbrewerydb.org/v1/breweries)
+4. lettura dati derivanti dall'api [https://api.openbrewerydb.org/v1/breweries](https://api.openbrewerydb.org/v1/breweries)
 
 #### Login
 
