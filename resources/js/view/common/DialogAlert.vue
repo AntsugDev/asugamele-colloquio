@@ -2,7 +2,7 @@
     <v-dialog v-model="dialogCust" min-width="200" max-width="400" >
         <v-card >
             <v-card-title class="headline"
-                          :style="'background:'+colorHex+';'+(color !== 'white' ? 'color:#ffffff' : 'color:#000000')">{{ title }}</v-card-title>
+                          :style="'background:'+colorHex+';color:#ffffff'">{{ title }}</v-card-title>
             <v-card-text>
                 <slot name="msg" >{{msg}}</slot>
             </v-card-text>
@@ -102,7 +102,7 @@ onBeforeMount(() => {
     if(theme.current.value.colors[props.color] !== undefined)
         colorHex.value = theme.current.value.colors[props.color];
     else
-        colorHex.value = "#ffffff"
+        colorHex.value = "#009688"
 })
 
 </script>

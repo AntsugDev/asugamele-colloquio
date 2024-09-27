@@ -73,7 +73,7 @@ const textPassword = ref({
 const viewPassword= () => {
     if(textPassword.value.type === 'password'){
         textPassword.value.type = 'text';
-        textPassword.value.icon = 'mdi-unlock';
+        textPassword.value.icon = 'mdi-lock-open';
     }else{
         textPassword.value.type = 'password';
         textPassword.value.icon = 'mdi-lock';

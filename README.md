@@ -30,7 +30,7 @@
 ## Swagger
 
 É stato aggiunto lo swagger, per la documentazione delle api presente all'indirizzo:
-<a href="/swagger/documentation">Swagger</a>
+[Swagger]({host}/swagger/documentation)
 
 ***
 
@@ -52,13 +52,13 @@ Il comando da eseguire è:
 
 ## Envorement
 
-Per le variabili d'ambiente, rinominare il file <a href=".env.example">.env.example</a> in <i>.env</i>
+Per le variabili d'ambiente, rinominare il file [.env.example](.env.example) in <i>.env</i>
 
 ***
 
 ## Test case
 
-Nel file <a href="tests/Feature/AuthTest.php">AuthTest.php</a>, vengono testate tutte le api in questa sequenza:
+Nel file [tests/Feature/AuthTest.php](AuthTest.php), vengono testate tutte le api in questa sequenza:
 1. login
 2. refresh token
 3. lista dati
@@ -79,20 +79,21 @@ Questa parte conta delle seguenti api:
 1. login 
 2. refresh token
 3. logout
-4. lettura dati derivanti dall'api <a href="https://api.openbrewerydb.org/v1/breweries">https://api.openbrewerydb.org/v1/breweries</a>
+4. lettura dati derivanti dall'api[https://api.openbrewerydb.org/v1/breweries](https://api.openbrewerydb.org/v1/breweries)
 
 #### Login
 
 La gestione dell'auth si base sulle funzionalità presenti in passport.
 La base dei dati è la tabella <i>users</i>, gestita attraverso il model user(<a href="app/Models/User.php">Model</a>).
-Il controller per la gestione dell'api è <a href="app/Http/Api/User/UserController.php@login">UserController.php@login</a>.<br />
+Il controller per la gestione dell'api è [app/Http/Api/User/UserController.php](UserController.php@login).<br />
 In questa funzione, dapprima si verifica la presenza dell'utente attraverso la classe <i>Auth</i>; 
 se le credenziali sono corrette, si verifica se ci sono token attivi per questa utenza e se ci fossero, viene impostato il campo  revoked della tabella <i>oauth_access_tokens</i> a true. <br />
 Inoltre, viene modificato nella tabella <i>oauth_access_tokens</i> l'expired di del token(*).<br />
 Viene creato il refresh token.
 Tutto questo, viene restitutto come risposta dell'api insieme ai dati dell'utente.<br />
 
-Di default sono state impostate le seguenti utenze, create attraverso il seeder <a href="database/seeders/UserSeeder.php">UserSeeder.php</a><br />
+Di default sono state impostate le seguenti utenze, create attraverso il seeder [database/seeders/UserSeeder.php](UserSeeder.php)
+
 <table>
 <thead>
 <tr>
@@ -116,7 +117,8 @@ Di default sono state impostate le seguenti utenze, create attraverso il seeder 
 
 #### Refresh token
 
-Questa sezione viene gestita nel controller <a href="app/Http/Api/User/UserController.php@refresh">UserController.php@refresh</a>. <br/>
+Questa sezione viene gestita nel controller [app/Http/Api/User/UserController.php](UserController.php@refresh). 
+
 Viene passato il valore del resfresh token, derivante dall'api precedente.
 Viene verificato:
 - se il refresh token è corretto
@@ -125,13 +127,15 @@ Se entrambe le condizioni sono verificate, il sistema imposta il campo revoked d
 La response di questa api, sarà uguale alla response dell'api precedente.
 
 #### Logout
-Questa sezione viene gestita nel controller <a href="app/Http/Api/User/UserController.php@logout">UserController.php@logout</a>. <br/>
+Questa sezione viene gestita nel controller [app/Http/Api/User/UserController.php](UserController.php@logout).
+
 In questa funzione viene revocato il token.
 Se non si sono verificate eccezioni, il sistema ritorna lo stato 200.
 
 #### Lettura dei dati
 
-Questa sezione viene gestita nel controller <a href="app/Http/Api/ApiController/ApiController.php@get_list">ApiController.php@get_list</a>. <br/>
+Questa sezione viene gestita nel controller [app/Http/Api/ApiController/ApiController.php](ApiController.php@get_list).
+
 La funzione istanzia un nuovo oggetto di <i>GuzzleHttp\Client</i>  e chiama l'api https://api.openbrewerydb.org/v1/breweries in get.
 
 Se questa risponde positivamente, viene restitua la risposta all'interno di un JsonResponse, altrtimenti viene restituita l'eccezione.
@@ -144,9 +148,9 @@ Il sistema ogni mezz'ora schedulerà un commando, che andrà a cambiare questa c
 
 Così facendo, il token che si sta utilizzando non sarà più buono.
 
-Sempre lato backe-end, nella situazione in cui o si cerca di chiamare un url non presente oppure se ci fossero problemi derivanti dalla connessione al db, il sistema reivierà l'utente alla pagina di errore gestita nelle viste di laravel (<a href="resources/views/error.blade.php">error</a>).
+Sempre lato backe-end, nella situazione in cui o si cerca di chiamare un url non presente oppure se ci fossero problemi derivanti dalla connessione al db, il sistema reivierà l'utente alla pagina di errore gestita nelle viste di laravel ([resources/views/error.blade.php](error)).
 
-La gestione delle eccezione è stata gestita direttamente nella sezione presente nel file <a href="bootstrap/app.php">app.php</a>.
+La gestione delle eccezione è stata gestita direttamente nella sezione presente nel file [bootstrap/app.php](app.php).
 
 ---
 
