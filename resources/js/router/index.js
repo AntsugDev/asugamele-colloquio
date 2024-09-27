@@ -5,6 +5,7 @@ import {store} from "../store/index.js";
 import TablePage from "../view/TablePage.vue";
 import dayjs from "dayjs";
 import UserPage from "../view/UserPage.vue";
+import ErrorPage from "../view/ErrorPage.vue";
 
 export const route = createRouter({
     history:createWebHistory(),
@@ -13,6 +14,11 @@ export const route = createRouter({
             path:'/login',
             name:'Login',
             component: LoginPage
+        },
+        {
+            path:'/error',
+            name:'Error',
+            component: ErrorPage
         },
         {
             path:'',

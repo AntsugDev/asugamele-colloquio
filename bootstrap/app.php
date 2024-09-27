@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -23,10 +24,15 @@ return Application::configure(basePath: dirname(__DIR__))
             $code = ResponseAlias::HTTP_NOT_ACCEPTABLE;
             if ($e->getCode() >= 100 && $e->getCode() <= 599)
                 $code = $e->getCode();
-            if($e instanceof  ValidationException){
+            if($e instanceof QueryException){
+                $msg = substr($e->getMessage(),0,40).'...';
+                $query =array("title" => "Error connect database","message" => "Database not active", "messageOriginal" => $msg);
+                return  response()->view('error',$query);
+            }
+            else if($e instanceof  ValidationException){
                 return new JsonResponse($e->errors(), $code);
             }
-            else if($e instanceof RouteNotFoundException){
+            else if($e instanceof RouteNotFoundException || $e instanceof \Laravel\Passport\Exceptions\AuthenticationException || $e instanceof \Illuminate\Auth\AuthenticationException){
                 return new JsonResponse(array("errors" =>"Unauthorized" ), \Symfony\Component\HttpFoundation\Response::HTTP_UNAUTHORIZED);
 
             }

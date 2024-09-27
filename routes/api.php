@@ -15,7 +15,7 @@ Route::middleware('auth:api')->group(function (){
 
 
 Route::any('/{any}', function () {
-    return  new \Illuminate\Http\JsonResponse(array("errors" => "Route not found or method unsupported"),404 );
+    return  response()->view('error' , ["title" => "404 Route exception","message"=> "Route not found or method unsupported", "messageOriginal"=> null]);
 })->where('any', '.*');
 
 

@@ -49,6 +49,13 @@ Il comando da eseguire è:
 
 ***
 
+## Envorement
+
+Per le variabili d'ambiente, rinominare il file <a href=".env.example">.env.example</a> in <i>.env</i>
+
+***
+
+
 ## Struttura del progetto
 
 ### Back-end
