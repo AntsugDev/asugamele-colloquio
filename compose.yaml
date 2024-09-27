@@ -1,4 +1,4 @@
-name: container_app_tester_laravel
+name: tester_laravel
 services:
   db:
     image: mysql:8.0
@@ -16,11 +16,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: app_tester
     container_name: Application
     working_dir: /var/www/html
     restart: on-failure
     volumes:
-        - ./vendor:/var/www/html/vendor
+      - ./vendor:/var/www/html/vendor
     ports:
       - "8000:80"
     environment:
