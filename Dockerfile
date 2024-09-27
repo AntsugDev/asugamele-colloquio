@@ -30,13 +30,8 @@ COPY --from=npm-stage --chown=www-data:www-data /var/www/html /var/www/html
 
 RUN composer install
 
-COPY start.sh /usr/local/bin/start.sh
-RUN chmod +x /usr/local/bin/start.sh
-
-
 
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 EXPOSE 80
 
-#CMD ["/usr/local/bin/start.sh"]

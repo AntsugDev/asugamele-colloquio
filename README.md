@@ -33,6 +33,22 @@
 
 ***
 
+## Docker
+Ho creato un container, che contiene l'applicativo e un db mysql.
+
+Una volta creato e avviato il container vanno eseguiti i seguenti commandi:
+
+- <pre>docker exec Application  php artisan migrate:refresh --seed</pre>
+- <pre>docker exec Application  php artisan schedule:work</pre>
+
+Ho creato anche un commando, per verificare se il database sia stato creato e l'applicativo sia connesso ad esso.
+
+Il comando da eseguire è:
+
+- <pre>docker exec Application  php artisan test-connect</pre>
+
+***
+
 ## Struttura del progetto
 
 ### Back-end
@@ -131,5 +147,8 @@ In fase di login, se l'api risponde positivamente, il sistema inserisce nel vuex
 La possibilità di refresh token, all'interno della pagina di gestione utenza, è puramente a scopo di test e in un progetto reale, gestirei la chiamata o al cambiamento di pagina, oppure ad intervalli regolari, se il token ha una validità inferiore ad un'ora. 
 
 Ho tralasciato un pò la parte grafica, usando semplicemnte i componenti mesis a disposizione da vuetify così come sono.
+
+***
+
 
 

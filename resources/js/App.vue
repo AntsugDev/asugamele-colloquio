@@ -17,7 +17,6 @@ const checker = computed(() => {
 const router = useRouter();
 const route = useRoute()
 document.body.addEventListener('click',() => {
-    console.log(['BODY_CLICK',checker.value,route.fullPath])
     if(route.fullPath.toString().indexOf('login') === -1) {
         if (checker.value) {
             router.push({name: 'Login', query: {error: btoa('Session is not valid')}})

@@ -95,7 +95,6 @@ const login = () => {
             load.value = false;
 
         }).catch(e => {
-            console.log('aaa',e)
             load.value = false;
             store.commit('Dialog/update',{
                 show:true,

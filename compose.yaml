@@ -1,25 +1,5 @@
+name: container_app_tester_laravel
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: Application
-    working_dir: /var/www/html
-    volumes:
-      - .:/var/www/html
-      - ./vendor:/var/www/html/vendor
-      - ./storage:/var/www/html/storage
-    ports:
-      - "8000:80"
-    environment:
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_DATABASE=asugamele_laravel
-      - DB_USERNAME=asugamele
-      - DB_PASSWORD=123qwe!@
-    depends_on:
-      - db
-
   db:
     image: mysql:8.0
     container_name: DbMysql
@@ -32,14 +12,24 @@ services:
       - db_data:/var/lib/mysql
     ports:
       - "3306:3306"
-
-  post_build:
-    build: .
-    container_name: PostBuild
-    command:
-        - /usr/local/bin/start.sh
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: Application
+    working_dir: /var/www/html
+    restart: on-failure
+    volumes:
+        - ./vendor:/var/www/html/vendor
+    ports:
+      - "8000:80"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=asugamele_laravel
+      - DB_USERNAME=asugamele
+      - DB_PASSWORD=123qwe!@
     depends_on:
       - db
-
 volumes:
   db_data:

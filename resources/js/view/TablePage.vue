@@ -126,12 +126,10 @@ const headers = computed(() =>{
 const tableList = () => {
     load.value = true
     api('list', 'GET').then(r => {
-        console.log('result',r.data)
         table.value = r.data
         load.value = false
 
     }).catch(e => {
-        console.log('e',e)
         load.value = false
     })
 }

@@ -20,7 +20,6 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (Throwable $e,$request){
-            dd($e);
             $code = ResponseAlias::HTTP_NOT_ACCEPTABLE;
             if ($e->getCode() >= 100 && $e->getCode() <= 599)
                 $code = $e->getCode();
