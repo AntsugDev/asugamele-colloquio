@@ -66,7 +66,7 @@ Nel file <a href="tests/Feature/AuthTest.php">AuthTest.php</a>, vengono testate 
 
 Per poter testare tale funzionalità, si può eseguire il seguente comando:
 
-- <pre>docker exec Application  php artisan test</pre>
+- <pre>docker exec Application  php artisan test --testsuite=Feature</pre>
 
 ***
 

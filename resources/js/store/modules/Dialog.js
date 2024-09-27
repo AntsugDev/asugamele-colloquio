@@ -3,7 +3,8 @@ const state = () => ({
         show:false,
         msg:null,
         routerName:null,
-        color:null
+        color:null,
+        title:null,
     }
 })
 const getters = {

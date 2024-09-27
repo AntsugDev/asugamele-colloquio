@@ -6,6 +6,7 @@
                          :dialog="dialog.show"
                          :router-name="dialog.routerName"
                          :color="dialog.color"
+                         :title="dialog.title"
             >
             </DialogAlert>
             <router-view></router-view>
