@@ -1,23 +1,29 @@
 <template>
-    <v-dialog v-model="dialogCust" min-width="400" max-width="800">
-        <v-card>
-            <v-card-title class="headline">{{ title }}</v-card-title>
+    <v-dialog v-model="dialogCust" min-width="200" max-width="400" >
+        <v-card >
+            <v-card-title class="headline"
+                          :style="'background:'+colorHex+';'+(color !== 'white' ? 'color:#ffffff' : 'color:#000000')">{{ title }}</v-card-title>
             <v-card-text>
                 <slot name="msg" >{{msg}}</slot>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary"  type="button"
+                <v-btn color="accent"  type="button"
                        block variant="elevated"  @click="close">{{textBtn}}</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
 </template>
 <script setup>
-import {ref, defineProps, watch, onMounted} from "vue";
+import {ref, defineProps, watch, onMounted, computed, onBeforeMount} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {store} from "../../store/index.js";
+import {useTheme} from "vuetify";
 const router = useRouter();
+const theme = useTheme();
+
+const colorHex = ref('success')
+
 const props = defineProps({
     dialog:{
         type:Boolean,
@@ -37,12 +43,18 @@ const props = defineProps({
         type:String,
         default:"Response Api",
         nullable:true
+    },
+    color:{
+        type:String,
+        default:'success',
+        nullable:true
     }
 })
 const textBtn = ref('Close');
 
 const dialogCust = ref(false)
 const route = useRoute()
+
 const close =() => {
     dialogCust.value = false
     if(props.routerName !== null) {
@@ -85,6 +97,14 @@ onMounted(() => {
             textBtn.value = "Go to " + props.routerName
     } else textBtn.value = 'Close'
 })
+
+onBeforeMount(() => {
+    if(theme.current.value.colors[props.color] !== undefined)
+        colorHex.value = theme.current.value.colors[props.color];
+    else
+        colorHex.value = "#ffffff"
+})
+
 </script>
 <style scoped lang="css">
 

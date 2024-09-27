@@ -1,7 +1,5 @@
 <template>
     <router-view></router-view>
-    <DialogAlert id="ciao" :msg="dialog.msg" :dialog="dialog.show" :router-name="dialog.routerName">
-    </DialogAlert>
     <FabButton></FabButton>
 </template>
 <script setup>

@@ -1,9 +1,5 @@
 <template>
     <v-container class="fill-height" fluid>
-        <DialogAlert id="ciao" :msg="dialog.msg"
-                     :dialog="dialog.show"
-                     :router-name="dialog.routerName">
-        </DialogAlert>
         <v-row align="center" justify="center">
             <v-col cols="12" sm="8" md="6" lg="4">
                 <v-card elevation="4">
@@ -95,13 +91,7 @@ const login = () => {
             load.value = false;
 
         }).catch(e => {
-            let data = e.response.data.data
-            console.log(data)
             load.value = false;
-            store.commit('Dialog/update',{
-                show:true,
-                msg: data !== undefined  && data.errors !== undefined ? data.errors :  e.message
-            })
         })
      }
  })
@@ -133,7 +123,8 @@ onMounted(() => {
         store.commit('Dialog/update', {
             show: true,
             msg: "Logout success!",
-            routerName: 'Reload'
+            routerName: 'Reload',
+            color:'warning'
         })
     }
 })
