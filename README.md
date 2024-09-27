@@ -20,9 +20,10 @@
 
 ### Dati di accesso al database
 
-<strong>USERNAME</strong>: asugamele<br />
+<strong>USERNAME</strong>: usersql<br />
 <strong>PASSWORD</strong>: 123qwe!@<br />
-<strong>DB_NAME</strong>: asugamele_laravel<br />
+<strong>DB_NAME</strong>: laravel_test<br />
+<strong>DB_PORT</strong>: 3306<br />
 
 ***
 
@@ -55,12 +56,25 @@ Per le variabili d'ambiente, rinominare il file <a href=".env.example">.env.exam
 
 ***
 
+## Test case
+
+Nel file <a href="tests/Feature/AuthTest.php">AuthTest.php</a>, vengono testate tutte le api in questa sequenza:
+1. login
+2. refresh token
+3. lista dati
+4. logout
+
+Per poter testare tale funzionalità, si può eseguire il seguente comando:
+
+- <pre>docker exec Application  php artisan test</pre>
+
+***
 
 ## Struttura del progetto
 
 ### Back-end
 
-Questa parte conta di due api:
+Questa parte conta delle seguenti api:
 
 1. login 
 2. refresh token
@@ -118,7 +132,7 @@ Se non si sono verificate eccezioni, il sistema ritorna lo stato 200.
 #### Lettura dei dati
 
 Questa sezione viene gestita nel controller <a href="app/Http/Api/ApiController/ApiController.php@get_list">ApiController.php@get_list</a>. <br/>
-La funzione prevede istanzia un nuovo <i>GuzzleHttp\Client</i>  e chiama l'api https://api.openbrewerydb.org/v1/breweries in get.
+La funzione istanzia un nuovo oggetto di <i>GuzzleHttp\Client</i>  e chiama l'api https://api.openbrewerydb.org/v1/breweries in get.
 
 Se questa risponde positivamente, viene restitua la risposta all'interno di un JsonResponse, altrtimenti viene restituita l'eccezione.
 
@@ -129,6 +143,10 @@ Il token generato ha validità un'ora; esso è legato allas chiave secreta prese
 Il sistema ogni mezz'ora schedulerà un commando, che andrà a cambiare questa chiave e, se presenti, andrà ad revocare i token(presenti sulla tabella <i>oauth_access_tokens</i>), creati da più di due ore e non revocati.
 
 Così facendo, il token che si sta utilizzando non sarà più buono.
+
+Sempre lato backe-end, nella situazione in cui o si cerca di chiamare un url non presente oppure se ci fossero problemi derivanti dalla connessione al db, il sistema reivierà l'utente alla pagina di errore gestita nelle viste di laravel (<a href="resources/views/error.blade.php">error</a>).
+
+La gestione delle eccezione è stata gestita direttamente nella sezione presente nel file <a href="bootstrap/app.php">app.php</a>.
 
 ---
 
@@ -153,7 +171,7 @@ In fase di login, se l'api risponde positivamente, il sistema inserisce nel vuex
 
 La possibilità di refresh token, all'interno della pagina di gestione utenza, è puramente a scopo di test e in un progetto reale, gestirei la chiamata o al cambiamento di pagina, oppure ad intervalli regolari, se il token ha una validità inferiore ad un'ora. 
 
-Ho tralasciato un pò la parte grafica, usando semplicemnte i componenti mesis a disposizione da vuetify così come sono.
+Ho tralasciato un pò la parte grafica, usando semplicemnte i componenti messi a disposizione da vuetify così come sono.
 
 ***
 

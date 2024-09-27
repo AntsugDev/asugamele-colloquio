@@ -5,8 +5,8 @@ services:
     container_name: DbMysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: asugamele_laravel
-      MYSQL_USER: asugamele
+      MYSQL_DATABASE: laravel_test
+      MYSQL_USER: usersql
       MYSQL_PASSWORD: 123qwe!@
     volumes:
       - db_data:/var/lib/mysql
