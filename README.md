@@ -150,7 +150,7 @@ La funzione istanzia un nuovo oggetto di <i>GuzzleHttp\Client</i>  e chiama l'ap
 
 Se questa risponde positivamente, viene restitua la risposta all'interno di un JsonResponse, altrtimenti viene restituita l'eccezione.
 
-La lista di ritorno sarà impaginata secondo la segunte regola:
+La lista di ritorno sarà impaginata secondo la seguente regola:
 - nr.elementi richiesti 10
 - nr. pagina 1
 Questi sono i valori di default impostati alle variabili size(nr.elementi) e page(nr.page) in query string. Ad ogni chiamata, questi valori possono essere cambiati.  
