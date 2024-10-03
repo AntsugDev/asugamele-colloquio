@@ -36,7 +36,7 @@ class Paginator extends LengthAwarePaginator
 
         return new JsonResponse(["data" =>[
             'page' => $this->currentPage(),
-            'totalPage' => ($this->chunk->count()-1),
+            'totalPage' => $this->chunk->count(),
             'size' => $this->perPage(),
             'totalElement' => $this->total(),
             'content' => $this->chunk->has(($this->currentPage()-1)) ? $this->chunk->get(($this->currentPage()-1))->values() : []
