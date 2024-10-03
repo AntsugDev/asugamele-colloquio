@@ -50,6 +50,7 @@ Una volta creato e avviato il container vanno eseguiti i seguenti commandi:
   oppure  
   <pre>docker exec Application  php artisan migrate:fresh --seed</pre>
 
+- <pre>docker exec Application  php artisan passport:install</pre>
 - <pre>docker exec Application  php artisan schedule:work</pre>
 
 Ho creato anche un commando, per verificare se il database sia stato creato e l'applicativo sia connesso ad esso.
